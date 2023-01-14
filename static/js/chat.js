@@ -20,12 +20,12 @@ ws.onopen = function (evt) {
 /** called when msg received from server; displays it. */
 
 ws.onmessage = function (evt) {
-  console.log('evt.data',evt.data);
+  console.log("evt.data", evt.data);
 
   let msg = JSON.parse(evt.data);
   let item;
 
-  console.log('msg',msg);
+  console.log("msg", msg);
 
   if (msg.type === "note") {
     item = $(`<li><i>${msg.text}</i></li>`);
@@ -73,9 +73,8 @@ $("form").submit(function (evt) {
   evt.preventDefault();
   let chatInput = $("#m").val();
   let data = formatData(chatInput);
-  debugger;
+
   ws.send(JSON.stringify(data));
-  debugger;
 
   $("#m").val("");
 });

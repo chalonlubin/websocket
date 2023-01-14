@@ -45,6 +45,7 @@ class Room {
    * */
 
   join(member) {
+    // console.log("this.member=",this.member,"this.members=",this.members)
     this.members.add(member);
   }
 
@@ -55,6 +56,11 @@ class Room {
 
   leave(member) {
     this.members.delete(member);
+  }
+
+
+  get(member) {
+    this.member.get(member);
   }
 
   /** Send message to all members in a room.

@@ -62,6 +62,22 @@ class ChatUser {
     });
   }
 
+  /** Handle a joke: show only to self.
+   *
+   * @param text {string} message to send
+   * */
+
+  handleJoke(text) {
+    let data = {
+      name: this.name,
+      type: "joke",
+      text: text,
+    };
+    console.log("memeber:", member)
+    member.send(JSON.stringify(data));
+  }
+
+
   /** Handle messages from client:
    *
    * @param jsonData {string} raw message data
@@ -76,7 +92,8 @@ class ChatUser {
     let msg = JSON.parse(jsonData);
 
     if (msg.type === "join") this.handleJoin(msg.name);
-    else if (msg.type === "chat") this.handleChat(msg.text);
+    else if (msg.type === "chat" || msg.type === "joke") //create new routing
+    this.handleChat(msg.text);
     else throw new Error(`bad message: ${msg.type}`);
   }
 
