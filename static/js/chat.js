@@ -61,7 +61,7 @@ function formatData(msg) {
 
   if (msg === "/joke") {
     data.type = "joke";
-    data.text = "this is a joke";
+    data.text = "";
   }
 
   return data;

@@ -1,5 +1,6 @@
 "use strict";
 
+const { getDadJoke } = require("./getDadJoke")
 /** Functionality related to chatting. */
 
 // Room is an abstraction of a chat channel
@@ -65,11 +66,12 @@ class ChatUser {
    * @param text {string} message to send
    * */
 
-  handleJoke(text) {
+  async handleJoke() {
+    const joke = await getDadJoke()
     let data = {
       name: this.name,
       type: "joke",
-      text: text,
+      text: joke,
     };
 
     this.send(JSON.stringify(data));
@@ -85,12 +87,12 @@ class ChatUser {
    * </code>
    */
 
-  handleMessage(jsonData) {
+  async handleMessage(jsonData) {
     let msg = JSON.parse(jsonData);
 
     if (msg.type === "join") this.handleJoin(msg.name);
     else if (msg.type === "chat") this.handleChat(msg.text);
-    else if (msg.type === "joke") this.handleJoke(msg.text);
+    else if (msg.type === "joke") await this.handleJoke();
     else throw new Error(`bad message: ${msg.type}`);
   }
 
