@@ -18,8 +18,6 @@ class ChatUser {
     this._send = send; // "send" function for this user
     this.room = Room.get(roomName); // room user will be in
     this.name = null; // becomes the username of the visitor
-
-    console.log(`created chat in ${this.room.name}`);
   }
 
   /** Send msgs to this client using underlying connection-send-function.
@@ -73,10 +71,9 @@ class ChatUser {
       type: "joke",
       text: text,
     };
-    console.log("memeber:", member)
-    member.send(JSON.stringify(data));
-  }
 
+    this.send(JSON.stringify(data));
+  }
 
   /** Handle messages from client:
    *
@@ -92,8 +89,8 @@ class ChatUser {
     let msg = JSON.parse(jsonData);
 
     if (msg.type === "join") this.handleJoin(msg.name);
-    else if (msg.type === "chat" || msg.type === "joke") //create new routing
-    this.handleChat(msg.text);
+    else if (msg.type === "chat") this.handleChat(msg.text);
+    else if (msg.type === "joke") this.handleJoke(msg.text);
     else throw new Error(`bad message: ${msg.type}`);
   }
 
